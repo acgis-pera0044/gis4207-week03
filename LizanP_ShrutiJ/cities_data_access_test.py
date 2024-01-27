@@ -1,6 +1,6 @@
 import cities_data_access as cda
 
-cda.DB_URI = f'../../../../data/world_db/world_test.db' 
+cda.DB_URI = f'sqlite:///../../../../data/world_db/world_test.db'
 
 # Create tests for each function in cities_data_access
 # Use red30_data_access_test.py to help you with the development of these tests
@@ -18,7 +18,7 @@ from cities_data_access import (
 import cities_data_access as cda
 
 # DB URI for the test database
-cda.DB_URI = f'sqlite:///world_test.db' 
+
 
 # pytest.fixtures are functions which are executed before each test
 # In this function, the yield statement means the code after the yield
@@ -54,3 +54,13 @@ def setup_database():
 
 def test_connection(setup_database):
     assert True
+
+def test_get_country_codes_and_names(setup_database):
+    expected = ('ASM', 'American Samoa')
+    actual = get_country_codes_and_names()[10]
+    assert expected == actual
+
+def test_add_city(setup_database):
+    id = add_city('Ottawa', 'CAN', 'Ontario', 1000000)
+    assert id != None
+    assert id >= 0

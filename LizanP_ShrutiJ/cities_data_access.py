@@ -5,7 +5,7 @@ import sys
 
 from sqlalchemy import create_engine, text
 
-_sqlite_file = '../../../../data/world_db/world.db'
+_sqlite_file = '../../../../data/world_db/world_test.db'
 DB_URI = f'sqlite:////{_sqlite_file}'
 
 
@@ -16,11 +16,14 @@ def get_country_codes_and_names():
         list(tuple): [(code1, country1), ... (codeN, countryN)]
     """
     # NOTE: This is a query from the country table in world_db
-    rows = None
-    return rows
+    engine = create_engine(DB_URI)
+    with engine.connect() as conn:
+        sql = text("SELECT code, name FROM country")
+        rows = conn.execute(sql)
+    return rows.fetchall()
 
 
-def add_city(name, country_code, district, population):
+def add_city(name, countrycode, district, population):
     """ Given information about the city, create a new row in the city
     table in the database
 
@@ -38,8 +41,23 @@ def add_city(name, country_code, district, population):
     #       The result proxy has a lastrowid property.  Assign the value of
     #       this property to the variable id.  If there was an issue creating
     #       the row, lastrowid will be assigned None
-    id = None  
-    return id
+    list_country_codes_and_names = get_country_codes_and_names()
+    for tuple_country in list_country_codes_and_names:
+        if tuple_country[0] == 
+    engine = create_engine(DB_URI)
+    with engine.connect() as conn:
+        sql = text("""
+            INSERT INTO "city" (name, countrycode, district, population)
+            VALUES (:name, :countrycode, :district, :population)""")
+        values = {
+            'name': name,
+            'countrycode': countrycode,
+            'district': district,
+            'population': population
+        }
+        result = conn.execute(sql, values)
+        conn.commit()
+    return result.lastrowid
     
     
 def get_city_by_name(name):

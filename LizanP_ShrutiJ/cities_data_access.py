@@ -70,12 +70,19 @@ def get_city_by_name(name):
         tuple: (name, country code, district, population) or None
     """
     # NOTE: Use the lower SQL function to convert the database name to 
-    #       lower case.  Use the .lower() python methond to convert the 
+    #       lower case.  Use the .lower() python method to convert the 
     #       value passed in the name parameter to lower case.
     #       Select all columns from the city table.  If the city does not
     #       exist, returns None.
-    row = None
-    return row
+    name = name.lower()
+    engine = create_engine(DB_URI)
+    with engine.connect() as conn:
+        sql = text("""Select name, countrycode, district, population 
+                    FROM city
+                    WHERE LOWER(name) = :name""")
+        values = {"name": name}
+        row = conn.execute(sql, values)
+        return row.fetchone()
 
 
 def update_city_population(name, population):

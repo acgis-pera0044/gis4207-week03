@@ -65,3 +65,15 @@ def test_add_city_invalid(setup_database):
     expected = None
     actual = add_city('Ottawa', 'CANE', 'Ontario', 1000000)
     assert expected == actual
+
+def test_get_city_by_name(setup_database):
+    expected = ('Ottawa', 'CAN', 'Ontario', 1000000)
+    add_city('Ottawa', 'CAN', 'Ontario', 1000000)
+    actual = get_city_by_name('ottawa')
+    assert expected == actual
+
+def test_get_city_by_name_does_not_exist(setup_database):
+    expected = None
+    add_city('Ottawa', 'CAN', 'Ontario', 1000000)
+    actual = get_city_by_name('Kingston')
+    assert expected == actual

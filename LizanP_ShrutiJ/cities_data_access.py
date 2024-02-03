@@ -5,8 +5,8 @@ import sys
 
 from sqlalchemy import create_engine, text
 
-_sqlite_file = '../../../../data/world_db/world_test.db'
-DB_URI = f'sqlite:////{_sqlite_file}'
+_sqlite_file = '../../../../data/world_db/world.db'
+DB_URI = f'sqlite:///{_sqlite_file}'
 
 
 def get_country_codes_and_names():

@@ -58,7 +58,7 @@ def add_city(city_info):
         print('Use get_country_codes to see a list of valid country codes\n')
         show_usage()
 
-    city_info = city_info[1:]
+    city_info = city_info[0:]
     id = cda.add_city(*city_info)
     if id == None:
         print('Unable to add city')

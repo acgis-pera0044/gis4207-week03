@@ -74,10 +74,10 @@ def get_city(name):
     Returns:
         tuple: (Name, country code, district, population)
     """
-    # city_info = cda.get_city_by_name(name)
-    # if city_info == None:
-    #     print("The city is not included in the database")
-    # return city_info
+    city_info = cda.get_city_by_name(name)
+    if city_info == None:
+        print("The city is not included in the database")
+    return city_info
 
 
 def delete_city(name):

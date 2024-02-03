@@ -43,23 +43,23 @@ def add_city(name, countrycode, district, population):
     #       the row, lastrowid will be assigned None
     list_country_codes_and_names = get_country_codes_and_names()
     for tuple_country in list_country_codes_and_names:
-        if tuple_country[0] == 
-    engine = create_engine(DB_URI)
-    with engine.connect() as conn:
-        sql = text("""
-            INSERT INTO "city" (name, countrycode, district, population)
-            VALUES (:name, :countrycode, :district, :population)""")
-        values = {
-            'name': name,
-            'countrycode': countrycode,
-            'district': district,
-            'population': population
-        }
-        result = conn.execute(sql, values)
-        conn.commit()
-    return result.lastrowid
-    
-    
+        if tuple_country[0] == countrycode:
+            engine = create_engine(DB_URI)
+            with engine.connect() as conn:
+                sql = text("""
+                    INSERT INTO "city" (name, countrycode, district, population)
+                    VALUES (:name, :countrycode, :district, :population)""")
+                values = {
+                    'name': name,
+                    'countrycode': countrycode,
+                    'district': district,
+                    'population': population
+                }
+                result = conn.execute(sql, values)
+                conn.commit()
+                return result.lastrowid       
+
+
 def get_city_by_name(name):
     """ Given the name of a city, return information about the city
 

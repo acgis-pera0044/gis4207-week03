@@ -1,12 +1,9 @@
 import cities_data_access as cda
-
-cda.DB_URI = f'sqlite:///../../../../data/world_db/world_test.db'
+from sqlalchemy import create_engine, text, inspect
+import pytest
 
 # Create tests for each function in cities_data_access
 # Use red30_data_access_test.py to help you with the development of these tests
-
-from sqlalchemy import create_engine, text, inspect
-import pytest
 
 from cities_data_access import (
     get_country_codes_and_names,
@@ -15,10 +12,9 @@ from cities_data_access import (
     update_city_population,
     delete_city_by_name
 )
-import cities_data_access as cda
 
 # DB URI for the test database
-
+cda.DB_URI = f'sqlite:///../../../../data/world_db/world_test.db'
 
 # pytest.fixtures are functions which are executed before each test
 # In this function, the yield statement means the code after the yield
@@ -64,3 +60,8 @@ def test_add_city(setup_database):
     id = add_city('Ottawa', 'CAN', 'Ontario', 1000000)
     assert id != None
     assert id >= 0
+
+def test_add_city_invalid(setup_database):
+    expected = None
+    actual = add_city('Ottawa', 'CANE', 'Ontario', 1000000)
+    assert expected == actual

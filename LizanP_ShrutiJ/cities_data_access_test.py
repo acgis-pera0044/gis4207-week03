@@ -77,3 +77,17 @@ def test_get_city_by_name_does_not_exist(setup_database):
     add_city('Ottawa', 'CAN', 'Ontario', 1000000)
     actual = get_city_by_name('Kingston')
     assert expected == actual
+
+def test_update_city_population(setup_database):
+    add_city('Ottawa', 'CAN', 'Ontario', 1000000)
+    row_count = update_city_population('Ottawa', 1200000)
+    assert row_count == 1
+    result = get_city_by_name("Ottawa")
+    assert result[3] == 1200000
+
+def test_update_city_population_invalid(setup_database):
+    add_city('Ottawa', 'CAN', 'Ontario', 1000000)
+    row_count = update_city_population('Kingston', 1200000)
+    assert row_count == 0
+    result = get_city_by_name("Kingston")
+    assert result == None

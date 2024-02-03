@@ -102,8 +102,23 @@ def update_city_population(name, population):
     #        The rowcount property of the result proxy contains the number
     #        of rows affected by the delete. Assign the variable row_count
     #        to the value of this property   
-    row_count = 0
-    return row_count
+    
+    name = name.lower()
+    engine = create_engine(DB_URI)
+    with engine.connect() as conn:
+        sql = text("""
+                   UPDATE city
+                   SET population = :population
+                   WHERE LOWER(name) = :name
+                   """)
+        values = {
+            'population': population,
+            'name' : name 
+        }
+        result_proxy = conn.execute(sql, values)
+        conn.commit()
+        row_count = result_proxy.rowcount
+        return row_count
 
     
 def delete_city_by_name(name):

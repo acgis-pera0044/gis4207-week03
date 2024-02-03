@@ -91,3 +91,15 @@ def test_update_city_population_invalid(setup_database):
     assert row_count == 0
     result = get_city_by_name("Kingston")
     assert result == None
+
+def test_delete_city_by_name(setup_database):
+    add_city('Ottawa', 'CAN', 'Ontario', 1000000)
+    expected = 1
+    actual = delete_city_by_name('ottawa')
+    assert expected == actual
+
+def test_delete_city_by_name_invalid(setup_database):
+    add_city('Ottawa', 'CAN', 'Ontario', 1000000)
+    expected = 0
+    actual = delete_city_by_name('Kingston')
+    assert expected == actual

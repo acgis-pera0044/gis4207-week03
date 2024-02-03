@@ -3,6 +3,7 @@
 
 import sys
 import cities_data_access as cda
+from sqlalchemy import create_engine, text
 
 def show_usage():
     print ("""
@@ -51,7 +52,7 @@ def add_city(city_info):
     Args: 
         list: city_info (i.e. name, country code, district, population) 
     """
-    country_code = city_info[2]
+    country_code = city_info[1]
     if not is_valid_country_code(country_code):
         print(f'{country_code} is not a valid country code')
         print('Use get_country_codes to see a list of valid country codes\n')
@@ -73,8 +74,10 @@ def get_city(name):
     Returns:
         tuple: (Name, country code, district, population)
     """
-    city_info = ''
-    return city_info
+    # city_info = cda.get_city_by_name(name)
+    # if city_info == None:
+    #     print("The city is not included in the database")
+    # return city_info
 
 
 def delete_city(name):
@@ -113,7 +116,10 @@ def is_valid_country_code(code_to_check):
 
     #TODO: Add the necessary code to determine if code_to_check is a
     #      valid country code or not
-    return False
+    codes_and_names = cda.get_country_codes_and_names()
+    for code, name in codes_and_names:
+        if code == code_to_check:
+            return True
 
 
 if __name__ == '__main__':

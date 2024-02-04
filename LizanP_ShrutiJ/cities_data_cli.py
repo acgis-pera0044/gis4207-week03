@@ -99,6 +99,11 @@ def update_city_population(name, population):
         name (str): Name of the city to update
         population (int): New population value
     """
+    rows_updated = cda.update_city_population(name, population)
+    if rows_updated == 0:
+        print(f'There is not city with the name {name} in the database. Population was not updated')
+    else:
+        print(f'Population updated in {rows_updated} cities with the name {name}')
 
 def show_country_codes():
     """ Print the country codes and names to the console.

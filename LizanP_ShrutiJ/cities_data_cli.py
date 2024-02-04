@@ -86,7 +86,11 @@ def delete_city(name):
     Args:
         name (str): Name of the city to delete
     """
-
+    rows_affected = cda.delete_city_by_name(name)
+    if rows_affected == 0:
+        print(f'There is not city with the name {name} in the database to delete')
+    else:
+        print(f'{rows_affected} records of {name} deleted')
 
 def update_city_population(name, population):
     """ Update the population value for a city

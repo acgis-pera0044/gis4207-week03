@@ -77,7 +77,8 @@ def get_city(name):
     city_info = cda.get_city_by_name(name)
     if city_info == None:
         print("The city is not included in the database")
-    return city_info
+    else:
+        return city_info
 
 
 def delete_city(name):
